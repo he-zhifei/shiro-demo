@@ -1,0 +1,37 @@
+server:
+  port: 9001
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    primary:
+      url: jdbc:mysql://127.0.0.1:3306/shiro-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=false
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password: 123456
+      initialSize: 5      #初始化大小
+      minIdle: 0       #最小闲置
+      #maxIdle: 10     #最大闲置（已被druid官方弃用）
+      maxActive: 300      #最大
+      maxWait: 60000      #配置获取连接等待超时的时间
+      timeBetweenEvictionRunsMillis: 60000        #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      minEvictableIdleTimeMillis: 300000          #配置一个连接在池中最小生存的时间，单位是毫秒
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      #打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall      #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙，eg:stat,wall,log4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000      #通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      useGlobalDataSourceStat: true       #合并多个DruidDataSource的监控数据
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+jwt:
+  rsa:
+    publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1tG6803X86juZbjcSmdITIz59h3l9a1mcRcA+xlBFK9k8tSptSO0/N6622ElVslPEazpMp4bD3oE1vue9t2zXxcH1DodXgcTTBrlb0jih+j3M6fIiLOBlB1JzCNNxIyEeQxjdeFMtrIPYnfkpaOzEU0cr9EFw1EaXbt1znIwI/q8EuIO1fx+wn1yObpGFshPjKUc0siaprpJENPL5og7BxK+wC94vdICASOVzzrWBMS0M4SIxTBlYjC4EhgFOBFrkyTlayUiBHhrkve0CXPum0Vwrt+9qww90Cbn83HG1Ce5A1FND4wsuVF+z8Q/B898M4cocDoCXGhm2MwPzDs/awIDAQAB
+    privateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDW0brzTdfzqO5luNxKZ0hMjPn2HeX1rWZxFwD7GUEUr2Ty1Km1I7T83rrbYSVWyU8RrOkynhsPegTW+5723bNfFwfUOh1eBxNMGuVvSOKH6Pczp8iIs4GUHUnMI03EjIR5DGN14Uy2sg9id+Slo7MRTRyv0QXDURpdu3XOcjAj+rwS4g7V/H7CfXI5ukYWyE+MpRzSyJqmukkQ08vmiDsHEr7AL3i90gIBI5XPOtYExLQzhIjFMGViMLgSGAU4EWuTJOVrJSIEeGuS97QJc+6bRXCu372rDD3QJufzccbUJ7kDUU0PjCy5UX7PxD8Hz3wzhyhwOgJcaGbYzA/MOz9rAgMBAAECggEANUFDPoQC0FYF29PrUMqwAsJESX55/uDg75JLXPSSzMT6mrSb6dsTSEkTO8WmkxBO+MvL+A94F+sg/gbdDshBaoZ0G2nY0/GfGBPm4yLHffgEKJskvLb7nbNxExmBcwN+599pXNTgxr330Gp2lZWyk8xxGykPa69UgP4zI13tj01qGXYkWwjCHMcDV6pAh2W/4DXz7jPq5OKggSAbhLlLolC/SeErvBuSvr99qGcqZtlixtehVkPdLyva2Rdz6RjYWKbw5CaP3m0ECuGqcQJ+u0Vx+s4dHHUjz52L3JXHdIoTW0g4fW9EJbxIZND69AsGUEhUpIjWClsh3gpJV0VDMQKBgQD3LnBdqD76TE+Kanws/FfpqWAib1R3xnV7yY1z+LIT0+0OiDNF9z2Z5s4G9BDIDxI1yjEBicDDknHaT+/6C9fpnhG4hRpWzWNFMcg9j99AgK8/oW8FMmrxP7Tl3gYfQkMjybwEPVLV9r3RQ8gPvK8h4bibTdjCFRwmZfzqx4ITswKBgQDee7iNmN5iOsI0yU8Ei9YGVuUsvp/oL2wn9mK+JVGqKQqHqqvcWHNuGeOpbHXI2bNp4HTp+z1ogO3+kJjAbgdYzwCGziHMYaCvMnihz6UqbadMq47RO1kc94lB8ZhnMtLz5tHPS3XV7sye7EjUSDYzqdRl8wn/MziVdBVBk6CpaQKBgQCAUnyFMr4XJRy6CBQVKp/dL1A4MEHSuJXvQLCNv1N7la7gt3ae4P768eaNl5FKuwBCKoiMet426cTviEZWMmXR43zhpUAKRjA+EN0akKFfFC9mwkEnmogIXIFmQIA/JCBE6QsRzGA/sgvTIvQur07gMRWskppwD5OAn7vQiuiNnwKBgD/NJw2kKxHsW8kbeceJ+mRzAuGkAONqxg9nvsVcmmC7yENDlGlqDCAk2H67lcN1etgAAEchP2j6oEWCXevBIeY75qDB+DtOO/BB/woYK/tQ2stH33rtFA8UhY4dpGDj2E8NgFl8AFzLUG66v9/wnWqPZ1OdMN64Z5+kXHwjw80RAoGBAO/f0oeXtkYVOQUSjJkLXsSVZZNlebiSsg7Yo8QYgEgjlebR4upGj3d2KaNEZOgdECRlMMLXBH4uOz87kvbf4oF+gwh1NAbFaFhmVBAPWfpaPq/EvKbak1uC7CO0RxXa6Xw28YK9Fs8Z2mNSacsCZXHI5P4+sD170Ghy/uhG09WH
